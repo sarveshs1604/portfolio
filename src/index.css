@@ -1,0 +1,279 @@
+@import 'tailwindcss';
+
+@theme {
+  --font-display: 'Outfit', 'Plus Jakarta Sans', ui-sans-serif, sans-serif;
+  --font-sans: 'Plus Jakarta Sans', 'Outfit', ui-sans-serif, sans-serif;
+  --color-ink: #050810;
+  --color-midnight: #0a1424;
+  --color-accent: #3b82f6;
+}
+
+/* Atmosphere keyframes — unlayered so they always resolve in Tailwind v4 */
+@keyframes atm-sun-pulse {
+  0%,
+  100% {
+    opacity: 0.75;
+    transform: scale(1);
+  }
+  50% {
+    opacity: 1;
+    transform: scale(1.08);
+  }
+}
+
+@keyframes atm-drift-a {
+  0% {
+    transform: translate3d(0, 0, 0);
+  }
+  50% {
+    transform: translate3d(10%, -4%, 0);
+  }
+  100% {
+    transform: translate3d(0, 0, 0);
+  }
+}
+
+@keyframes atm-drift-b {
+  0% {
+    transform: scaleX(-1) translate3d(0, 0, 0);
+  }
+  50% {
+    transform: scaleX(-1) translate3d(-12%, 3%, 0);
+  }
+  100% {
+    transform: scaleX(-1) translate3d(0, 0, 0);
+  }
+}
+
+@keyframes atm-rain-fall {
+  0% {
+    transform: translate3d(0, -12vh, 0);
+    opacity: 0;
+  }
+  8% {
+    opacity: 1;
+  }
+  100% {
+    transform: translate3d(0, 115vh, 0);
+    opacity: 0;
+  }
+}
+
+@keyframes atm-snow-fall {
+  0% {
+    transform: translate3d(0, -8vh, 0);
+    opacity: 0;
+  }
+  10% {
+    opacity: 1;
+  }
+  100% {
+    transform: translate3d(8vw, 112vh, 0);
+    opacity: 0;
+  }
+}
+
+@keyframes atm-wind-sweep {
+  0% {
+    transform: translate3d(-20vw, 0, 0);
+    opacity: 0;
+  }
+  15% {
+    opacity: 1;
+  }
+  85% {
+    opacity: 0.55;
+  }
+  100% {
+    transform: translate3d(115vw, 0, 0);
+    opacity: 0;
+  }
+}
+
+@layer base {
+  html {
+    scroll-behavior: smooth;
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    html {
+      scroll-behavior: auto;
+    }
+  }
+
+  body {
+    margin: 0;
+    min-width: 320px;
+    font-family: var(--font-sans);
+    background-color: var(--color-ink);
+    color: #e2e8f0;
+    -webkit-font-smoothing: antialiased;
+    text-rendering: optimizeLegibility;
+  }
+
+  ::selection {
+    background: rgba(59, 130, 246, 0.35);
+    color: #fff;
+  }
+
+  :focus-visible {
+    outline: 2px solid rgba(96, 165, 250, 0.7);
+    outline-offset: 2px;
+  }
+}
+
+@layer components {
+  .font-display {
+    font-family: var(--font-display);
+  }
+
+  .glass-card {
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+  }
+
+  @media (max-width: 640px) {
+    .glass-card {
+      backdrop-filter: blur(8px);
+      -webkit-backdrop-filter: blur(8px);
+    }
+  }
+
+  .skip-link {
+    position: absolute;
+    left: 1rem;
+    top: -100px;
+    z-index: 100;
+    border-radius: 9999px;
+    background: #1d4ed8;
+    color: white;
+    padding: 0.6rem 1rem;
+    font-size: 0.875rem;
+    font-weight: 500;
+    transition: top 0.2s ease;
+  }
+
+  .skip-link:focus {
+    top: 1rem;
+  }
+
+  /* —— Atmosphere effects (CSS/DOM only) —— */
+
+  .atm-grain {
+    background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.55'/%3E%3C/svg%3E");
+    background-size: 180px 180px;
+    mix-blend-mode: overlay;
+  }
+
+  .atm-sun-glow {
+    position: absolute;
+    top: -12%;
+    right: 4%;
+    width: min(58vw, 480px);
+    height: min(58vw, 480px);
+    border-radius: 50%;
+    background: radial-gradient(
+      circle,
+      rgba(191, 219, 254, 0.38) 0%,
+      rgba(96, 165, 250, 0.16) 38%,
+      rgba(59, 130, 246, 0.06) 55%,
+      transparent 72%
+    );
+  }
+
+  .atm-sun-glow--live {
+    animation: atm-sun-pulse 7s ease-in-out infinite;
+  }
+
+  .atm-cloud {
+    position: absolute;
+    inset: -15% -25%;
+    background:
+      radial-gradient(ellipse 42% 30% at 18% 28%, rgba(203, 213, 225, 0.28), transparent 70%),
+      radial-gradient(ellipse 48% 32% at 72% 42%, rgba(148, 163, 184, 0.22), transparent 70%),
+      radial-gradient(ellipse 38% 28% at 48% 68%, rgba(100, 116, 139, 0.18), transparent 70%);
+    filter: blur(24px);
+  }
+
+  .atm-cloud--b {
+    transform: scaleX(-1);
+    opacity: 0.9;
+  }
+
+  .atm-cloud--live.atm-cloud--a {
+    animation: atm-drift-a 22s ease-in-out infinite;
+  }
+
+  .atm-cloud--live.atm-cloud--b {
+    animation: atm-drift-b 28s ease-in-out infinite;
+  }
+
+  .atm-rain-streak {
+    position: absolute;
+    top: -12%;
+    width: 1.5px;
+    background: linear-gradient(
+      to bottom,
+      transparent,
+      rgba(186, 230, 253, 0.7),
+      rgba(125, 211, 252, 0.35),
+      transparent
+    );
+    border-radius: 1px;
+  }
+
+  .atm-rain-streak--live {
+    animation: atm-rain-fall 0.7s linear infinite;
+  }
+
+  .atm-snow-flake {
+    position: absolute;
+    top: -6%;
+    border-radius: 50%;
+    background: rgba(241, 245, 249, 0.9);
+    box-shadow: 0 0 6px rgba(226, 232, 240, 0.45);
+  }
+
+  .atm-snow-flake--live {
+    animation: atm-snow-fall 9s linear infinite;
+  }
+
+  .atm-wind-wisp {
+    position: absolute;
+    left: -25%;
+    height: 2px;
+    border-radius: 9999px;
+    background: linear-gradient(
+      90deg,
+      transparent,
+      rgba(226, 232, 240, 0.45),
+      rgba(148, 163, 184, 0.25),
+      transparent
+    );
+  }
+
+  .atm-wind-wisp--live {
+    animation: atm-wind-sweep 6s ease-in-out infinite;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .atm-sun-glow--live,
+  .atm-cloud--live,
+  .atm-rain-streak--live,
+  .atm-snow-flake--live,
+  .atm-wind-wisp--live {
+    animation: none !important;
+  }
+}
+
+/* Pause continuous atmosphere loops when tab is hidden (perf) */
+@media (prefers-reduced-motion: no-preference) {
+  .atm-paused .atm-sun-glow--live,
+  .atm-paused .atm-cloud--live,
+  .atm-paused .atm-rain-streak--live,
+  .atm-paused .atm-snow-flake--live,
+  .atm-paused .atm-wind-wisp--live {
+    animation-play-state: paused;
+  }
+}

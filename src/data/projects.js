@@ -1,0 +1,106 @@
+/**
+ * Featured projects — sourced from resume.
+ */
+export const projects = [
+  {
+    id: 'secure-cloud-storage',
+    title: 'Secure Cloud Storage System',
+    description:
+      'Secure cloud storage platform with encrypted file management, secure sharing, and role-based access control, integrated with AWS S3.',
+    category: 'Cloud Computing & Cybersecurity',
+    tech: [
+      'React.js',
+      'Material UI',
+      'Node.js',
+      'Express.js',
+      'PostgreSQL',
+      'AWS S3',
+      'JWT',
+      'AES-256-GCM',
+    ],
+    year: '2026',
+    githubUrl: 'https://github.com/sarveshs1604/',
+    liveUrl: null,
+    result: 'Envelope encryption, JWT auth, and secure key rotation',
+  },
+  {
+    id: 'approval-workflow',
+    title: 'Approval Workflow System',
+    description:
+      'Django approval platform with real-time email alerts, digital signatures, and PDF/Excel report exports for transparent document tracking.',
+    category: 'Intern Project · Web Application',
+    tech: [
+      'Django',
+      'HTML5',
+      'CSS3',
+      'JavaScript',
+      'Bootstrap',
+      'AJAX / Fetch API',
+    ],
+    year: '2025',
+    githubUrl: 'https://github.com/sarveshs1604/',
+    liveUrl: null,
+    result: 'Multi-level approval chain with dynamic status updates',
+  },
+  {
+    id: 'student-helpdesk-chatbot',
+    title: 'Student Helpdesk Chatbot',
+    description:
+      'AI-powered student helpdesk chatbot with TF-IDF semantic search, Groq LLM fallback, multilingual support, session memory, and analytics-driven responses.',
+    category: 'Artificial Intelligence & Web Development',
+    tech: [
+      'Python',
+      'Flask',
+      'Scikit-learn',
+      'SQLite',
+      'Groq API',
+      'TF-IDF',
+      'HTML/CSS',
+    ],
+    year: '2026',
+    githubUrl: 'https://github.com/sarveshs1604/',
+    liveUrl: null,
+    result: null,
+  },
+  {
+    id: 'facial-emotion-detection',
+    title: 'Real-Time Facial Emotion Detection',
+    description:
+      'Real-time facial expression detection web app using Flask, YOLOv8, and OpenCV — live webcam-based recognition of 9 emotions with start/stop camera control.',
+    category: 'Machine Learning',
+    tech: [
+      'Python',
+      'Flask',
+      'YOLOv8',
+      'OpenCV',
+      'HTML5',
+      'CSS3',
+      'JavaScript',
+      'Threading',
+    ],
+    year: '2025',
+    githubUrl: 'https://github.com/sarveshs1604/',
+    liveUrl: null,
+    result: '9-emotion live recognition via webcam',
+  },
+  {
+    id: 'toxic-comments',
+    title: 'Toxic Comments Classification',
+    description:
+      'Multi-label toxic comment classification on the Kaggle Jigsaw dataset using TF-IDF and an ensemble of Logistic Regression, Random Forest, and XGBoost. Paper published.',
+    category: 'Machine Learning · Paper Published',
+    tech: [
+      'Python',
+      'Pandas',
+      'NumPy',
+      'Scikit-learn',
+      'XGBoost',
+      'TF-IDF',
+      'Voting Classifier',
+    ],
+    year: '2025',
+    githubUrl: 'https://github.com/sarveshs1604/',
+    liveUrl: null,
+    result: '95% accuracy · 0.96 ROC-AUC',
+  },
+]
