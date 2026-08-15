@@ -10,6 +10,7 @@ import { navLinks } from '../../config/themeConfig'
 export default function Navbar() {
   const [scrolled, setScrolled] = useState(false)
   const [open, setOpen] = useState(false)
+  const [pendingId, setPendingId] = useState(null)
   const prefersReduced = useReducedMotion()
 
   useEffect(() => {
@@ -27,6 +28,29 @@ export default function Navbar() {
   }, [open])
 
   const closeMenu = () => setOpen(false)
+
+  const doScrollTo = (id) => {
+    const el = document.getElementById(id)
+    if (el) {
+      el.scrollIntoView({ behavior: 'smooth' })
+      history.replaceState(null, '', `#${id}`)
+    } else {
+      window.location.hash = `#${id}`
+    }
+  }
+
+  const handleNavClick = (e, id) => {
+    e.preventDefault()
+    // If mobile menu is open, close it first and wait for exit animation
+    if (open) {
+      setPendingId(id)
+      closeMenu()
+    } else {
+      // desktop: scroll immediately
+      doScrollTo(id)
+      closeMenu()
+    }
+  }
 
   return (
     <motion.header
@@ -61,6 +85,7 @@ export default function Navbar() {
             <li key={link.id}>
               <a
                 href={`#${link.id}`}
+                onClick={(e) => handleNavClick(e, link.id)}
                 className="rounded-full px-3 py-2 text-sm text-slate-300 transition-colors hover:text-white focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-blue-400/70"
               >
                 {link.label}
@@ -81,7 +106,15 @@ export default function Navbar() {
         </button>
       </nav>
 
-      <AnimatePresence>
+      <AnimatePresence
+        onExitComplete={() => {
+          if (pendingId) {
+            // perform scroll after mobile menu exit animation finishes
+            doScrollTo(pendingId)
+            setPendingId(null)
+          }
+        }}
+      >
         {open ? (
           <motion.div
             id="mobile-nav"
@@ -96,8 +129,8 @@ export default function Navbar() {
                 <li key={link.id}>
                   <a
                     href={`#${link.id}`}
+                    onClick={(e) => handleNavClick(e, link.id)}
                     className="block rounded-xl px-4 py-3 text-base text-slate-200 hover:bg-white/5 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-blue-400/70"
-                    onClick={closeMenu}
                   >
                     {link.label}
                   </a>
